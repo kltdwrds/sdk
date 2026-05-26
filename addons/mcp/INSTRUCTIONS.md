@@ -106,6 +106,12 @@ pnpm dev
 
 Your MCP endpoint is now served at `/mcp`, gated by your rwsdk middleware, with per-request identity available to the agent as `this.props`.
 
+## Caveats
+
+- **`path` must equal the full request path.** The Agents SDK's `serve()` matches internally on `url.pathname`. If you mount the route under a `prefix(...)` (e.g. `prefix("/api", [route("/mcp", …)])`), the real path is `/api/mcp`, so pass `mcpHandler(MyMcpAgent, { path: "/api/mcp" })` to match.
+- **Don't consume the request body before this route.** MCP `POST` messages carry a body. A global middleware that reads `request.body`/`request.json()` (e.g. for logging) will empty the stream before the MCP transport sees it. Keep body-reading middleware off the MCP path, or `clone()` the request.
+- **SSE transport needs both endpoints.** `transport: "streamable-http"` (default) is a single endpoint. The legacy `transport: "sse"` expects the SSE paths the Agents SDK serves (`/sse` and `/sse/message`); mount both.
+
 ## Options
 
 `mcpHandler(agent, options)`:
