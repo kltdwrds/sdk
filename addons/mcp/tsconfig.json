@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "es2021",
+    "lib": ["DOM", "DOM.Iterable", "ESNext", "ES2022"],
+    "composite": true,
+    "module": "es2022",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "checkJs": false,
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "noEmit": true,
+    "ignoreDeprecations": "6.0",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "rwsdk/*": ["../../sdk/src/*"]
+    },
+    "types": ["@cloudflare/workers-types"]
+  },
+  "references": [{ "path": "../../sdk" }],
+  "include": ["src/**/*.ts", "types/**/*.d.ts"],
+  "exclude": ["node_modules"]
+}
